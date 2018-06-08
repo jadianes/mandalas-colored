@@ -8,33 +8,9 @@
 #
 
 library(shiny)
+source("ui/header.R")
+source("ui/sidebar.R")
+source("ui/body.R")
 
-dashboardPage(
-  dashboardHeader(title = "Mandalas generator"),
-  dashboardSidebar(
-    sidebarMenu(
-      menuItem(sliderInput("iter",
-                   "Number of iterations:",
-                   min = 3,
-                   max = 20,
-                   value = 4)),
-      menuItem(sliderInput("radius",
-                   "Radius:",
-                   min = 1.02,
-                   max = 1.9,
-                   value = 1.5)),
-       menuItem(sliderInput("points",
-           "Number of points:",
-           min = 4,
-           max = 20,
-           value = 6))
-      )
-    ),
-    
-    # Show a plot of the generated distribution
-  dashboardBody(
-    box(plotOutput("distPlot", height = "400", width = "400"),
-    downloadButton("download_mandala", "Download"))
-  )
-)
+dashboardPage(header, sidebar, body)
 

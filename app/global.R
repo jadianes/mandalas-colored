@@ -1,3 +1,3 @@
 library(shinydashboard)
 
-source("mandalas.R")
+source("functions/mandalas.R")
