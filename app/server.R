@@ -7,29 +7,38 @@ shinyServer(function(input, output) {
     getMandala(input$iter, input$radius, input$points)
   })
   
-  output$distPlot <- renderPlot({
-    if (is.null(mandalaPlot())) {
-      return(NULL)
-    }
-    
-    mandalaPlot()
-  })
-  
-  # Downloadable mandala
-  output$download_mandala <- downloadHandler(
-    filename = "mandala.png",
-    content = function(file) {
-      device <- function(..., width, height) {
-        grDevices::png(..., width = width, height = height,
-                       res = 300, units = "in")
+  lapply(
+    1:2,
+    function(i) {
+      output[[paste0("distPlot", i)]] <- renderPlot({
+        if (is.null(mandalaPlot())) {
+          return(NULL)
         }
-      ggsave(file, 
-             plot = mandalaPlot(),
-             height=10, 
-             width=10, 
-             units='in', 
-             dpi=300)
+        
+        mandalaPlot()
+      })
+      
+      # Downloadable mandala
+      output[[paste0("download_mandala", i)]] <- downloadHandler(
+        filename = "mandala.png",
+        content = function(file) {
+          device <- function(..., width, height) {
+            grDevices::png(..., width = width, height = height,
+                           res = 300, units = "in")
+          }
+          ggsave(file, 
+                 plot = mandalaPlot(),
+                 height=10, 
+                 width=10, 
+                 units='in', 
+                 dpi=300)
+        }
+      )
+      
     }
   )
+  
+  
+  
   
 })
