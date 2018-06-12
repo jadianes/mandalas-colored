@@ -8,7 +8,7 @@ shinyServer(function(input, output) {
   # Stores the ggplot object of each mandala
   mandalas <- list()
   # Stores the parameters of each mandala
-  mandalas_params <- data.frame(id=c(), iter=c(), radius=c(), points=c(), mandala=c())
+  mandalas_params <- data.frame(id=c(), iter=c(), radius=c(), points=c(), palette=c())
   
   # Add new mandala action button
   num_mandalas <- eventReactive(input$add_mandala, {
@@ -26,7 +26,7 @@ shinyServer(function(input, output) {
     
     # Reactive blocs to render mandalas
     # NOTE: Make this a reactive bloc when adding individual edit controls
-    mandalas[[i]] <<- getMandala(input$iter, input$radius, input$points)
+    mandalas[[i]] <<- getMandala(input$iter, input$radius, input$points, input$palette_id)
     
     # Mandalas plots, using each reactive mandala generator
     output[[paste0("distPlot", i)]] <- renderPlot({

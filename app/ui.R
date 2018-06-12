@@ -30,6 +30,10 @@ dashboardPage(
                            min = 4,
                            max = 20,
                            value = 8)),
+      menuItem(textInput(
+        "palette_id",
+        "Colour Lovers palette id (empty for random)"
+      )),
       menuItem(actionButton("add_mandala", "Add"))
     )
   ), 

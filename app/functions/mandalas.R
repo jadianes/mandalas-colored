@@ -69,7 +69,7 @@ generateTesselation <- function(df) {
 #' 
 #' @return the palette
 getRandomPalette <- function() {
-  sample(clpalettes('top'), 1)[[1]] %>% swatch %>% .[[1]]
+  sample(clpalettes('top'),1)[[1]] %>% swatch %>% .[[1]]
 }
 
 #' Draw mandala with geom_polygon. Colur depends on area
@@ -78,7 +78,7 @@ getRandomPalette <- function() {
 #' @param radius
 #' @param points
 #' @return a ggplot object
-getMandala <- function(iter, radius, points) {
+getMandala <- function(iter, radius, points, palette_id) {
   
   # init data
   df <- initData(iter, radius, points)
@@ -87,7 +87,11 @@ getMandala <- function(iter, radius, points) {
   df_polygon <- generateTesselation(df)
   
   # get palette
-  palette <- getRandomPalette()
+  if (is.null(palette_id) || palette_id=='') {
+    palette <- getRandomPalette()
+  } else {
+    palette <- clpalette(as.character(palette_id)) %>% swatch %>% .[[1]]
+  }
   
   # Generate plot
   p <- ggplot(df_polygon, aes(x = x, y = y)) +
