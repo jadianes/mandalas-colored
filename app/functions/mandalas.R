@@ -95,6 +95,7 @@ getMandala <- function(iter, radius, points) {
                  show.legend = FALSE, size=0)+
     scale_fill_gradientn(colors=sample(palette, length(palette))) + 
     scale_color_gradientn(colors="gray30") +   
+    coord_fixed() +
     theme_void()
   
   p

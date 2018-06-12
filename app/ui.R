@@ -8,8 +8,35 @@
 #
 
 library(shiny)
-source("ui/header.R")
-source("ui/sidebar.R")
-source("ui/body.R")
 
-dashboardPage(header, sidebar, body)
+dashboardPage(
+  
+  dashboardHeader(title = "Mandalas generator"), 
+  
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem(sliderInput("iter",
+                           "Number of iterations:",
+                           min = 3,
+                           max = 10,
+                           value = 3)),
+      menuItem(sliderInput("radius",
+                           "Radius:",
+                           min = 1.02,
+                           max = 1.9,
+                           value = 1.5)),
+      menuItem(sliderInput("points",
+                           "Number of points:",
+                           min = 4,
+                           max = 20,
+                           value = 8)),
+      menuItem(actionButton("add_mandala", "Add"))
+    )
+  ), 
+  
+  dashboardBody(
+    fluidRow(
+      uiOutput('mandala_editors')
+    )
+  )
+)
