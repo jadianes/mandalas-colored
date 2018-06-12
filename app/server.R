@@ -1,13 +1,14 @@
 library(shiny)
 library(tidyverse)
 
-# Stores the parameters of each mandala
-mandalas <- list()
-mandalas_params <- data.frame(id=c(), iter=c(), radius=c(), points=c(), mandala=c())
-
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
+  
+  # Stores the ggplot object of each mandala
+  mandalas <- list()
+  # Stores the parameters of each mandala
+  mandalas_params <- data.frame(id=c(), iter=c(), radius=c(), points=c(), mandala=c())
   
   # Add new mandala action button
   num_mandalas <- eventReactive(input$add_mandala, {
@@ -32,7 +33,6 @@ shinyServer(function(input, output) {
       if (is.null(mandalas[[i]])) {
         return(NULL)
       }
-      
       mandalas[[i]]
     })
     
@@ -59,9 +59,7 @@ shinyServer(function(input, output) {
   
   # For each mandala being edited...
   observe({
-    
     num_mandalas <- num_mandalas()
-    
     # Create editors
     output$mandala_editors <- renderUI({
       lapply(1:num_mandalas,
