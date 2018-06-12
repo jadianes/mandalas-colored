@@ -1,0 +1,12 @@
+name: mandalas-studio
+title: mandalas-studio
+username:
+account: jadianes
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 359541
+bundleId: 1424551
+url: https://jadianes.shinyapps.io/mandalas-studio/
+when: 1528794960.13957
+asMultiple: FALSE
+asStatic: FALSE

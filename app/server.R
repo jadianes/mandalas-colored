@@ -45,7 +45,7 @@ shinyServer(function(input, output) {
                          res = 300, units = "in")
         }
         ggsave(file, 
-               plot = mandalas[[i]](),
+               plot = mandalas[[i]],
                height=10, 
                width=10, 
                units='in', 
@@ -64,18 +64,14 @@ shinyServer(function(input, output) {
     
     # Create editors
     output$mandala_editors <- renderUI({
-      editors <- lapply(1:num_mandalas,
+      lapply(1:num_mandalas,
          function(i) {
-           tabBox(
-            tabPanel("Mandala", plotOutput(paste0("distPlot",i))),
-            tabPanel("Params",
-              paste("Iterations: ", mandalas_params[i, "iter"])
-            ),
+           box(
+            plotOutput(paste0("distPlot",i)),
             downloadButton(paste0("download_mandala",i), "Download")
            )
          }
       )
-      do.call(shiny::tagList, editors)
     }) 
     
     
