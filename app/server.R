@@ -66,9 +66,12 @@ shinyServer(function(input, output) {
     output$mandala_editors <- renderUI({
       editors <- lapply(1:num_mandalas,
          function(i) {
-           box(
-             plotOutput(paste0("distPlot",i)),
-             downloadButton(paste0("download_mandala",i), "Download")
+           tabBox(
+            tabPanel("Mandala", plotOutput(paste0("distPlot",i))),
+            tabPanel("Params",
+              paste("Iterations: ", mandalas_params[i, "iter"])
+            ),
+            downloadButton(paste0("download_mandala",i), "Download")
            )
          }
       )
