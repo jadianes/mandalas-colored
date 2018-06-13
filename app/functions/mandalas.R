@@ -8,6 +8,24 @@ library(deldir)
 library(colourlovers)
 library(rlist)
 
+# Pre-calculate angles of points from center
+POINTS_RANGE <- 4:20
+all_angles <- sapply(
+  POINTS_RANGE, 
+  function(points) {
+    points=seq(0, 2*pi*(1-1/points), length.out = points)+pi/2
+  })
+names(all_angles) <- as.character(POINTS_RANGE)
+all_cos <- sapply(all_angles,
+                  function(angles) {
+                    cos(angles)
+                  })
+all_sin <- sapply(all_angles,
+                  function(angles) {
+                    sin(angles)
+                  })
+
+
 #' Initialize data based on iterations, radius, and number of points
 #' 
 #' @param iter the number of iterations
@@ -15,8 +33,9 @@ library(rlist)
 #' @param points
 #' @return a dataframe
 initData <- function(iter, radius, points) {
+  points <- as.character(points)
   # Angles of points from center
-  angles=seq(0, 2*pi*(1-1/points), length.out = points)+pi/2
+  angles <- all_angles[points]
   
   # Initial center
   df=data.frame(x=0, y=0)
@@ -27,8 +46,8 @@ initData <- function(iter, radius, points) {
     temp=data.frame()
     for (i in 1:nrow(df))
     {
-      data.frame(x=df[i,"x"]+radius^(k-1)*cos(angles), 
-                 y=df[i,"y"]+radius^(k-1)*sin(angles)) %>% rbind(temp) -> temp
+      data.frame(x=df[i,"x"]+radius^(k-1)*all_cos[points], 
+                 y=df[i,"y"]+radius^(k-1)*all_sin[points]) %>% rbind(temp) -> temp
     }
     df=temp
   }
