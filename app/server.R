@@ -1,6 +1,8 @@
 library(shiny)
 library(tidyverse)
-
+# library(promises)
+# library(future)
+# plan(multiprocess)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {

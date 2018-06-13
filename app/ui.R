@@ -18,7 +18,7 @@ dashboardPage(
       menuItem(sliderInput("iter",
                            "Number of iterations:",
                            min = 3,
-                           max = 6,
+                           max = 5,
                            value = 3)),
       menuItem(sliderInput("radius",
                            "Radius:",
