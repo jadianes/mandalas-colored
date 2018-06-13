@@ -9,22 +9,28 @@ library(colourlovers)
 library(rlist)
 
 # Pre-calculate angles of points from center
+print("Pre-calculating angles, cosines, sines...")
+start.time <- Sys.time()
+
 POINTS_RANGE <- 4:20
-all_angles <- sapply(
+all_angles <- lapply(
   POINTS_RANGE, 
   function(points) {
-    points=seq(0, 2*pi*(1-1/points), length.out = points)+pi/2
+    seq(0, 2*pi*(1-1/points), length.out = points)+pi/2
   })
 names(all_angles) <- as.character(POINTS_RANGE)
-all_cos <- sapply(all_angles,
+all_cos <- lapply(all_angles,
                   function(angles) {
                     cos(angles)
                   })
-all_sin <- sapply(all_angles,
+all_sin <- lapply(all_angles,
                   function(angles) {
                     sin(angles)
                   })
 
+end.time <- Sys.time()
+time.taken <- end.time - start.time
+print(paste("DONE in ", time.taken, "seconds"))
 
 #' Initialize data based on iterations, radius, and number of points
 #' 
@@ -35,7 +41,7 @@ all_sin <- sapply(all_angles,
 initData <- function(iter, radius, points) {
   points <- as.character(points)
   # Angles of points from center
-  angles <- all_angles[points]
+  angles <- all_angles[[points]]
   
   # Initial center
   df=data.frame(x=0, y=0)
@@ -46,8 +52,8 @@ initData <- function(iter, radius, points) {
     temp=data.frame()
     for (i in 1:nrow(df))
     {
-      data.frame(x=df[i,"x"]+radius^(k-1)*all_cos[points], 
-                 y=df[i,"y"]+radius^(k-1)*all_sin[points]) %>% rbind(temp) -> temp
+      data.frame(x=df[i,"x"]+radius^(k-1)*all_cos[[points]], 
+                 y=df[i,"y"]+radius^(k-1)*all_sin[[points]]) %>% rbind(temp) -> temp
     }
     df=temp
   }
@@ -98,6 +104,7 @@ getRandomPalette <- function() {
 #' @param points
 #' @return a ggplot object
 getMandala <- function(iter, radius, points, palette_id) {
+  start.time <- Sys.time()
   
   # init data
   df <- initData(iter, radius, points)
@@ -112,6 +119,12 @@ getMandala <- function(iter, radius, points, palette_id) {
     palette <- clpalette(as.character(palette_id)) %>% swatch %>% .[[1]]
   }
   
+  end.time <- Sys.time()
+  time.taken <- end.time - start.time
+  print(paste("Mandala generated in ", time.taken, "seconds"))
+  print("Now creating ggplot...")
+  start.time <- Sys.time()
+  
   # Generate plot
   p <- ggplot(df_polygon, aes(x = x, y = y)) +
     geom_polygon(aes(fill = area, color=area, group = ptNum), 
@@ -122,6 +135,10 @@ getMandala <- function(iter, radius, points, palette_id) {
     theme_void()
   
   p
+  
+  end.time <- Sys.time()
+  time.taken <- end.time - start.time
+  print(paste("ggplot generated in ", time.taken, "seconds"))
   
   # Return
   return(p)
