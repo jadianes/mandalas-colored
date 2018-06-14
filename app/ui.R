@@ -28,7 +28,7 @@ dashboardPage(
       menuItem(sliderInput("points",
                            "Number of points:",
                            min = 4,
-                           max = 20,
+                           max = 16,
                            value = 8)),
       menuItem(textInput(
         "palette_id",
