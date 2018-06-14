@@ -11,7 +11,7 @@ library(shiny)
 
 dashboardPage(
   
-  dashboardHeader(title = "Mandalas generator"), 
+  dashboardHeader(title = "Mandalas Studio"), 
   
   dashboardSidebar(
     sidebarMenu(

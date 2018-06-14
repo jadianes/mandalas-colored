@@ -104,13 +104,32 @@ getRandomPalette <- function() {
 #' @param points
 #' @return a ggplot object
 getMandala <- function(iter, radius, points, palette_id) {
+  
+  ################################
+  print("Init data structure...")
   start.time <- Sys.time()
   
   # init data
   df <- initData(iter, radius, points)
   
+  end.time <- Sys.time()
+  time.taken <- end.time - start.time
+  print(paste("data initialised in", time.taken, "seconds"))
+  ################################
+  
+  
+  ################################
+  print("Generating tesselation...")
+  start.time <- Sys.time()
+  
   # generate tesselation
   df_polygon <- generateTesselation(df)
+  
+  end.time <- Sys.time()
+  time.taken <- end.time - start.time
+  print(paste("tesselation done in", time.taken, "seconds"))
+  ################################
+  
   
   # get palette
   if (is.null(palette_id) || palette_id=='') {
@@ -119,9 +138,8 @@ getMandala <- function(iter, radius, points, palette_id) {
     palette <- clpalette(as.character(palette_id)) %>% swatch %>% .[[1]]
   }
   
-  end.time <- Sys.time()
-  time.taken <- end.time - start.time
-  print(paste("Mandala generated in ", time.taken, "seconds"))
+  
+  ################################
   print("Now creating ggplot...")
   start.time <- Sys.time()
   
@@ -134,11 +152,10 @@ getMandala <- function(iter, radius, points, palette_id) {
     coord_fixed() +
     theme_void()
   
-  p
-  
   end.time <- Sys.time()
   time.taken <- end.time - start.time
   print(paste("ggplot generated in ", time.taken, "seconds"))
+  ################################
   
   # Return
   return(p)

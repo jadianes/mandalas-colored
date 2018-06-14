@@ -16,6 +16,12 @@ shinyServer(function(input, output) {
   num_mandalas <- eventReactive(input$add_mandala, {
     i <- nrow(mandalas_params) + 1
     
+    # Get input values
+    iter <- input$iter
+    radius <- input$radius
+    points <- input$points
+    palette_id <- input$palette_id
+    
     # Add new params
     mandalas_params <<- mandalas_params %>% bind_rows( 
       data.frame(
@@ -26,16 +32,25 @@ shinyServer(function(input, output) {
       )
     )
     
-    # Reactive blocs to render mandalas
-    # NOTE: Make this a reactive bloc when adding individual edit controls
-    mandalas[[i]] <<- getMandala(input$iter, input$radius, input$points, input$palette_id)
+    # # Get mandala
+    # mandalas[[i]] <<- getMandala(input$iter, input$radius, input$points, input$palette_id)
+    # 
+    # # Mandalas plots, using each reactive mandala generator
+    # output[[paste0("distPlot", i)]] <- renderPlot({
+    #   if (is.null(mandalas[[i]])) {
+    #     return(NULL)
+    #   }
+    #   mandalas[[i]]
+    # })
     
-    # Mandalas plots, using each reactive mandala generator
+    # Get mandala, asynchronously
     output[[paste0("distPlot", i)]] <- renderPlot({
-      if (is.null(mandalas[[i]])) {
-        return(NULL)
+      future({
+        getMandala(iter, radius, points, palette_id)
+      }) %...>% {
+        mandalas[[i]] <<- .
+        .
       }
-      mandalas[[i]]
     })
     
     # Downloadable mandala
