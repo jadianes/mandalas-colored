@@ -26,9 +26,9 @@ shinyServer(function(input, output) {
     mandalas_params <<- mandalas_params %>% bind_rows( 
       data.frame(
         id = i,
-        iter = input$iter,
-        radius = input$radius,
-        points = input$points
+        iter = iter,
+        radius = radius,
+        points = points
       )
     )
     
