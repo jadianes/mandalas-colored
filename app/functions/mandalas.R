@@ -8,6 +8,7 @@ library(deldir)
 library(colourlovers)
 library(rlist)
 
+
 # Pre-calculate angles of points from center
 print("Pre-calculating angles, cosines, sines...")
 start.time <- Sys.time()
@@ -31,6 +32,7 @@ all_sin <- lapply(all_angles,
 end.time <- Sys.time()
 time.taken <- end.time - start.time
 print(paste("DONE in ", time.taken, "seconds"))
+
 
 #' Initialize data based on iterations, radius, and number of points
 #' 
@@ -62,6 +64,7 @@ initData <- function(iter, radius, points) {
   df
 }
 
+
 #' Function to extract id, coordinates and area of each polygon
 #' 
 #' @param tile
@@ -71,6 +74,7 @@ crea <- function(tile) {
     list.match("ptNum|x|y|area") %>% 
     as.data.frame()
 }
+
 
 #' Generate tesselation, obtain polygons and create a dataframe with results
 #' This dataframe will be the input of ggplot
@@ -90,12 +94,6 @@ generateTesselation <- function(df) {
   df_polygon
 }
 
-#' Pick a random top palette from colourLovers
-#' 
-#' @return the palette
-getRandomPalette <- function() {
-  sample(clpalettes('top'),1)[[1]] %>% swatch %>% .[[1]]
-}
 
 #' Draw mandala with geom_polygon. Colur depends on area
 #' 
@@ -105,43 +103,20 @@ getRandomPalette <- function() {
 #' @return a ggplot object
 getMandala <- function(iter, radius, points, palette_id) {
   
-  ################################
-  print("Init data structure...")
-  start.time <- Sys.time()
-  
   # init data
   df <- initData(iter, radius, points)
-  
-  end.time <- Sys.time()
-  time.taken <- end.time - start.time
-  print(paste("data initialised in", time.taken, "seconds"))
-  ################################
-  
-  
-  ################################
-  print("Generating tesselation...")
-  start.time <- Sys.time()
   
   # generate tesselation
   df_polygon <- generateTesselation(df)
   
-  end.time <- Sys.time()
-  time.taken <- end.time - start.time
-  print(paste("tesselation done in", time.taken, "seconds"))
-  ################################
-  
-  
   # get palette
   if (is.null(palette_id) || palette_id=='') {
-    palette <- getRandomPalette()
+    p <- clpalettes('top')
+    palette_id <- p$id
+    palette <- sample(p,1)[[1]] %>% swatch %>% .[[1]]
   } else {
     palette <- clpalette(as.character(palette_id)) %>% swatch %>% .[[1]]
   }
-  
-  
-  ################################
-  print("Now creating ggplot...")
-  start.time <- Sys.time()
   
   # Generate plot
   p <- ggplot(df_polygon, aes(x = x, y = y)) +
@@ -152,13 +127,8 @@ getMandala <- function(iter, radius, points, palette_id) {
     coord_fixed() +
     theme_void()
   
-  end.time <- Sys.time()
-  time.taken <- end.time - start.time
-  print(paste("ggplot generated in ", time.taken, "seconds"))
-  ################################
-  
-  # Return
-  return(p)
+  # Return 
+  return(list(plot=p, palette_id="1234"))
 }
 
 

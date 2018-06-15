@@ -29,7 +29,7 @@ dashboardPage(
                            "Number of points:",
                            min = 4,
                            max = 16,
-                           value = 8)),
+                           value = 10)),
       menuItem(textInput(
         "palette_id",
         "Colour Lovers palette id (empty for random)"
