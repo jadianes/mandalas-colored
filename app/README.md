@@ -40,10 +40,10 @@ The mandala generation code is called asynchronously using the `promises` and `f
 
 ### Mandalas generation  
 
-Antonio Sánchez Chinchón - @aschinchon
+Antonio Sánchez Chinchón - [@aschinchon](https://github.com/aschinchon)
 
 ### Shiny app  
 
-Jose A. Dianes - @jadianes  
+Jose A. Dianes - [@jadianes](https://github.com/jadianes)  
 
 
