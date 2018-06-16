@@ -101,7 +101,9 @@ generateTesselation <- function(df) {
 #' @param radius
 #' @param points
 #' @return a ggplot object
-getMandala <- function(iter, radius, points, palette_id) {
+getMandala <- function(iter, radius, points, palette) {
+  
+  palette_colours <- palette  %>% swatch %>% .[[1]]
   
   # init data
   df <- initData(iter, radius, points)
@@ -109,26 +111,32 @@ getMandala <- function(iter, radius, points, palette_id) {
   # generate tesselation
   df_polygon <- generateTesselation(df)
   
-  # get palette
-  if (is.null(palette_id) || palette_id=='') {
-    p <- clpalettes('top')
-    palette_id <- p$id
-    palette <- sample(p,1)[[1]] %>% swatch %>% .[[1]]
-  } else {
-    palette <- clpalette(as.character(palette_id)) %>% swatch %>% .[[1]]
-  }
-  
   # Generate plot
   p <- ggplot(df_polygon, aes(x = x, y = y)) +
     geom_polygon(aes(fill = area, color=area, group = ptNum), 
                  show.legend = FALSE, size=0)+
-    scale_fill_gradientn(colors=sample(palette, length(palette))) + 
+    scale_fill_gradientn(colors=sample(palette_colours, length(palette_colours))) + 
     scale_color_gradientn(colors="gray30") +   
     coord_fixed() +
     theme_void()
   
   # Return 
-  return(list(plot=p, palette_id="1234"))
+  return(p)
+}
+
+#' Get palette by id or return a random one
+#'
+#' @param palette_id the colour lovers palette id
+#' @return The palette associated with the palette ID or a random one
+getPalette <- function(palette_id) {
+  # get palette
+  if (is.null(palette_id) || palette_id=='') {
+    p <- sample(clpalettes('top'),1)[[1]]
+  } else {
+    p <- clpalette(as.character(palette_id))
+  }
+  
+  return(p)
 }
 
 

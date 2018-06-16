@@ -1,9 +1,10 @@
-# Mandalas studio
+# Mandalas Studio
 
-This is a Shiny app to generate mandalas using the voronoi tesselation code written by @aschinchon. You can read more about it [at his blog](https://fronkonstin.com/2018/03/11/mandalas-colored/). It allows the user to:  
-- Generate multiple mandalas dynamically and using different parameters, offering an interactive visual exploration tool.  
+This is a Shiny app to interactively generate mandalas using the voronoi tesselation code written by @aschinchon. You can read more about it [at his blog](https://fronkonstin.com/2018/03/11/mandalas-colored/). It allows the user to:  
+- Generate multiple mandalas dynamically in the same view and using different parameters, providing an interactive visual exploration tool.  
 - Download the results as `PNG` files.  
 
+![The UI](/img/screenshot.png?raw=true "The UI")
 
 ## Prerequisites  
 
@@ -21,7 +22,6 @@ They are used to run R code asynchronously.
 ### Functions  
 
 At the core of the Shiny application there is the voronoi tesselation code written by @aschinchon. You can read more about it [at his blog](https://fronkonstin.com/2018/03/11/mandalas-colored/). The code is all contained in the `functions/mandalas.R` script and has been refactored into functions to be called from the Shiny app using parameters, and also to pre-calculate a small part of the data needed to generate the mandala.    
-
 ### Dynamic UI  
 
 The UI elements of the Shiny app are genrated on run time. We can generate multiple mandalas with different configurations using the sidebar controls. Each of these mandalas can then be downloaded. Therefore, the following three elements are generated for each click in the `Add` button:  
@@ -30,11 +30,13 @@ The UI elements of the Shiny app are genrated on run time. We can generate multi
 - The `renderPlot` bloc that displays the mandala.  
 - The `Download` button haldler.  
 
-Al of them are kept into ddynamic data structures.  
+Al of them are kept into dynamic data structures and the code associated with them is kept in the `ui` folder as functions called (typically) from `server.R` based on events.    
 
 ### Async programming 
 
-The mandala generation code is called asynchronously using the `promises` and `future` packages. By doing so, we can achieve certain improved responsiveness and a better overall user experience.  
+The mandala generation code is called asynchronously using the `promises` and `future` packages. By doing so, we can achieve certain improved responsiveness and a better overall user experience. A first introduction to async programming with Shiny can be [found here](https://rstudio.github.io/promises/articles/shiny.html).  
+
+
 
 
 
