@@ -11,7 +11,11 @@ library(shiny)
 
 dashboardPage(
   
-  dashboardHeader(title = "Mandalas Studio"), 
+  dashboardHeader(title = "Mandalas Studio", 
+                  tags$li(class="dropdown", 
+                          tags$a(href="https://github.com/jadianes/mandalas-colored/tree/shiny/app", 
+                          icon("github"), "Source", target="_blank"))
+                  ), 
   
   dashboardSidebar(
     sidebarMenu(

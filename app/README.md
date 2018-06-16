@@ -36,7 +36,14 @@ Al of them are kept into dynamic data structures and the code associated with th
 
 The mandala generation code is called asynchronously using the `promises` and `future` packages. By doing so, we can achieve certain improved responsiveness and a better overall user experience. A first introduction to async programming with Shiny can be [found here](https://rstudio.github.io/promises/articles/shiny.html).  
 
+## Authors
 
+### Mandalas generation  
 
+Antonio Sánchez Chinchón - @aschinchon
+
+### Shiny app  
+
+Jose A. Dianes - @jadianes  
 
 
