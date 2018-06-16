@@ -4,7 +4,7 @@ This is a Shiny app to interactively generate mandalas using the voronoi tessela
 - Generate multiple mandalas dynamically in the same view and using different parameters, providing an interactive visual exploration tool.  
 - Download the results as `PNG` files.  
 
-![The UI](/img/screenshot.png?raw=true "The UI")
+![The UI](img/screenshot.png?raw=true "The UI")
 
 ## Prerequisites  
 
