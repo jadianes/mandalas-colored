@@ -10,9 +10,6 @@ library(rlist)
 
 
 # Pre-calculate angles of points from center
-print("Pre-calculating angles, cosines, sines...")
-start.time <- Sys.time()
-
 POINTS_RANGE <- 4:20
 all_angles <- lapply(
   POINTS_RANGE, 
@@ -28,10 +25,6 @@ all_sin <- lapply(all_angles,
                   function(angles) {
                     sin(angles)
                   })
-
-end.time <- Sys.time()
-time.taken <- end.time - start.time
-print(paste("DONE in ", time.taken, "seconds"))
 
 
 #' Initialize data based on iterations, radius, and number of points
@@ -114,7 +107,7 @@ getMandala <- function(iter, radius, points, palette) {
   # Generate plot
   p <- ggplot(df_polygon, aes(x = x, y = y)) +
     geom_polygon(aes(fill = area, color=area, group = ptNum), 
-                 show.legend = FALSE, size=0)+
+                 show.legend = FALSE, size=0, lwd=0)+
     scale_fill_gradientn(colors=sample(palette_colours, length(palette_colours))) + 
     scale_color_gradientn(colors="gray30") +   
     coord_fixed() +
