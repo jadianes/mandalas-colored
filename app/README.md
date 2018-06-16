@@ -8,7 +8,7 @@ This is a Shiny app to interactively generate mandalas using the voronoi tessela
 
 ## Prerequisites  
 
-In addition to those required by the original mandalas code, and those required to run Shiny apps, you will also need to install the following packages (if you don't have them already):
+In addition to those required by the [original mandalas code](https://github.com/aschinchon/mandalas-colored), and those required to [run Shiny apps](https://shiny.rstudio.com/tutorial/written-tutorial/lesson1/), you will also need to install the following packages (if you don't have them already):
 
 ```
 install.packages("promises")
@@ -16,6 +16,14 @@ install.packages("future")
 ```
 
 They are used to run R code asynchronously.
+
+## How to run  
+
+Once all the pre-requisites are met, we can simply run the app from its folder.  
+
+```
+runApp()
+```
 
 ## Implementation  
 
